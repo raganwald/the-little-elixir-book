@@ -1,7 +1,4 @@
 defmodule Recursion do
-  def flatten([]), do: []
-  def flatten([ head | tail]), do: flatten(head) ++ flatten(tail)
-  def flatten(something), do: [something]
 
   def foldl(_, [], seed), do: seed
   def foldl(f, [head | tail], seed), do: foldl(f, tail, f.(seed, head))
@@ -14,13 +11,14 @@ defmodule Recursion do
   def foldr(f, seed), do: fn(list) -> foldr(f, list, seed) end
 
   def _foldr(_, [only]), do: only
-  def _foldr(f, [head | tail]), do: f.(head, _foldr(tail))
+  def _foldr(f, [head | tail]), do: f.(head, _foldr(f, tail))
 
   def foldr(f), do: fn(list) -> _foldr(f, list) end
 
   def reverse([]), do: []
-  def reverse([head | tail]), do: foldl(fn(acc, elem) -> [reverse(elem) | acc] end, [head | tail], [])
-  def reverse(something), do: something
+  def reverse(list), do: foldl(fn(tail, head) -> [head | tail] end, list, [])
 
-  def map(f, list), do: foldl(fn(acc, elem) -> [fn])
+  def flatten([]), do: []
+  def flatten([ head | tail]), do: flatten(head) ++ flatten(tail)
+  def flatten(something), do: [something]
 end
