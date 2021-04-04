@@ -1,5 +1,4 @@
 defmodule Recursion do
-
   def foldl(_, [], seed), do: seed
   def foldl(f, [head | tail], seed), do: foldl(f, tail, f.(seed, head))
   def foldl(f, seed), do: fn(list) -> foldl(f, list, seed) end
@@ -21,4 +20,7 @@ defmodule Recursion do
   def flatten([]), do: []
   def flatten([ head | tail]), do: flatten(head) ++ flatten(tail)
   def flatten(something), do: [something]
+
+  def mirror({}), do: {}
+  def mirror({l, s, r}), do: {mirror(r), s, mirror(l)}
 end
